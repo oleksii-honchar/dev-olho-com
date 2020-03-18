@@ -1,16 +1,16 @@
-const path = require('path');
-const webpack = require('webpack');
-const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const path = require("path");
+const webpack = require("webpack");
+const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const TsConfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
-console.log('[config:webpack:snippet] Base loaded');
+console.log("[config:webpack:snippet] Base loaded");
 
-const pkg = require('../../package.json');
+const pkg = require("../../package.json");
 
 module.exports = (env) => {
-  const outputSuff = env.TS_TARGET === 'es5' ? 'es5.js': 'mjs';
+  const outputSuff = env.TS_TARGET === "es5" ? "es5.js": "mjs";
 
   console.log(`[config:webpack:snippet] Base: processing "${env.TS_TARGET}" config`);
 
@@ -20,37 +20,42 @@ module.exports = (env) => {
     devServer: {
       // http2: true,
       port: process.env.SERVE_PORT,
-      contentBase: path.join(__dirname, '../../dist'),
-      publicPath: '/assets/',
+      contentBase: path.join(__dirname, "../../dist"),
+      publicPath: "/assets/",
       writeToDisk: true,
     },
     entry: {
-      app: './src/index.tsx',
+      app: "./src/index.tsx",
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.html', '.ts', '.tsx', '.mjs'],
+      alias: {
+        "react": "preact/compat",
+        "react-dom/test-utils": "preact/test-utils",
+        "react-dom": "preact/compat",
+      },
+      extensions: [".js", ".jsx", ".html", ".ts", ".tsx", ".mjs"],
         modules: [
-        'src',
-        'node_modules',
+        "src",
+        "node_modules",
       ],
       plugins: [
         new TsConfigPathsPlugin({
           configFile: path.join(__dirname, `../tsconfig.${env.TS_TARGET}.json`),
-          logLevel: 'info'
+          logLevel: "info"
         })
       ]
     },
     output: {
-      path: path.join(__dirname, '../../dist'),
+      path: path.join(__dirname, "../../dist"),
         filename: `[name].bundle.${outputSuff}`,
         chunkFilename: `[name].bundle.${outputSuff}`,
         sourceMapFilename: `[name].${env.TS_TARGET}.map`,
-        publicPath: './',
+        publicPath: "./",
     },
     plugins: [
       new LodashModuleReplacementPlugin(),
       new webpack.DefinePlugin({
-        'process.env': {
+        "process.env": {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV),
           LOG_LEVEL: JSON.stringify(process.env.LOG_LEVEL),
           PKG_NAME: JSON.stringify(pkg.name),
@@ -58,13 +63,13 @@ module.exports = (env) => {
         },
       }),
       new LoaderOptionsPlugin({
-        debug: process.env.NODE_ENV !== 'production',
-        minimize: process.env.NODE_ENV === 'production'
+        debug: process.env.NODE_ENV !== "production",
+        minimize: process.env.NODE_ENV === "production"
       }),
       new CopyWebpackPlugin([{
-        from: './src/assets',
-        to: '.',
-        ignore: [ '*.hbs', '.DS_Store' ],
+        from: "./src/assets",
+        to: ".",
+        ignore: [ "*.hbs", ".DS_Store" ],
       }]),
     ],
     node: false,

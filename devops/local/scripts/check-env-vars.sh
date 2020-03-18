@@ -24,9 +24,8 @@ function checkVar () {
 
 printf "${LBLUE}Gonna check env vars...${NC}\n";
 
-checkVar LOG_LEVEL
-checkVar SERVE_PORT
-
-checkVar NODE_ENV
+checkVar S3_BUCKET
+checkVar DISTRIBUTION_ID
 
 printf "${LBLUE}Check completed${NC}\n";
+echo " ";

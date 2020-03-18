@@ -9,6 +9,7 @@
     "resolveJsonModule": false,
     "importHelpers": true,
     "jsx": "react",
+    "jsxFactory": "h",
     "lib": [
       "dom",
       "esnext"

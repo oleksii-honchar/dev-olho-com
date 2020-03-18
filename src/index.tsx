@@ -1,5 +1,4 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { h, render } from "preact";
 // @ts-ignore
 import { LoggerService } from "@ciklum/logan";
 
@@ -14,7 +13,7 @@ logger.setTitle("index");
 function startApp(): void {
   logger.info("Starting app...");
 
-  ReactDOM.render(<Root />, document.querySelector("#app-root"));
+  render(<Root />, document.querySelector("#app-root"));
 }
 
 startApp();

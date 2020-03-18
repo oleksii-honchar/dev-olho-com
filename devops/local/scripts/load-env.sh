@@ -6,10 +6,10 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-if [ -f '.env' ]; then
-    printf "Gonna load root .env file ";
-    source '.env' && \
-    export $(grep -o '^[^#]*' .env);
+file=${1:-'project.env'}
+if [ -f $file ]; then
+    printf "Gonna load root project.env file ";
+    source $file;
 
     if [ $? -eq 0 ]; then
         printf "${GREEN}[Ok]${NC}\n";
@@ -18,6 +18,8 @@ if [ -f '.env' ]; then
         exit 1;
     fi
 else
-    printf "${RED}No .env file found in: ${NC}$PWD\n"
+    printf "${RED}No ${file} file found in: ${NC}$PWD\n"
     exit 1;
 fi
+
+echo "";

@@ -21,12 +21,20 @@ function chmodFile () {
     fi
 }
 
-printf "${LBLUE}Gonna make all this scripts executable ...${NC}\n";
+printf "${LBLUE}Gonna make local scripts executable ...${NC}\n";
 
 currDir="$(pwd)"
 printf "Base dir: $currDir\n";
 
-chmodFile devops/local/scripts/load-env.sh
-chmodFile devops/local/scripts/check-env-vars.sh
+printf "${GREEN}./devops/local/scripts/${NC}\n";
+chmodFile ./devops/local/scripts/check-env-vars.sh
+chmodFile ./devops/local/scripts/load-env.sh
+
+printf "${GREEN}./scripts/${NC}\n";
+chmodFile ./scripts/build.sh
+chmodFile ./scripts/build.loc.sh
+chmodFile ./scripts/deploy-to-cdn.sh
+chmodFile ./scripts/launch.dev-server.sh
+chmodFile ./scripts/watch.loc.sh
 
 printf "${LBLUE}Done${NC}\n";
